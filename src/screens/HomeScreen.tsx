@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, Image, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { Image, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
 import { appTheme } from '../theme/appTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePokemonPaginated } from '../hooks';
+import { FadeInImage } from '../components';
 
 export const HomeScreen = () => {
 
-    const { top } = useSafeAreaInsets();
+    // const { top } = useSafeAreaInsets();
     const { simplePokemonList, loadPokemons } = usePokemonPaginated();
 
     return (
@@ -20,9 +21,10 @@ export const HomeScreen = () => {
                 data={simplePokemonList}
                 keyExtractor={(pokemon) => pokemon.id}
                 showsVerticalScrollIndicator={false}
+                numColumns={2}
                 renderItem={({ item }) => (
-                    <Image
-                        source={{ uri: item.picture }}
+                    <FadeInImage
+                        uri={item.picture}
                         style={styles.pokemonImage}
                     />
                 )}
