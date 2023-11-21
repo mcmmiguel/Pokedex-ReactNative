@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from 'rea
 import ImageColors from 'react-native-image-colors';
 import { PokemonCardProps } from '../interfaces';
 import { FadeInImage } from './FadeInImage';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
 
     const [bgColor, setBgColor] = useState('gray');
     const isMounted = useRef(true);
+    const navigation = useNavigation<any>();
 
     useEffect(() => {
         ImageColors.getColors(pokemon.picture, { fallback: 'gray' })
@@ -27,10 +29,20 @@ export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
         return () => {
             isMounted.current = false;
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <TouchableOpacity activeOpacity={0.9}>
+        <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={
+                () => navigation.navigate(
+                    'PokemonScreen', {
+                    simplePokemon: pokemon,
+                    color: bgColor,
+                })
+            }
+        >
             <View style={{ ...styles.cardContainer, backgroundColor: bgColor }}>
                 {/* Nombre del pokemon y ID */}
                 <View>
