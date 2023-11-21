@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
 import ImageColors from 'react-native-image-colors';
 import { PokemonCardProps } from '../interfaces';
@@ -8,19 +8,26 @@ const windowWidth = Dimensions.get('window').width;
 export const PokemonCard = ({ pokemon }: PokemonCardProps) => {
 
     const [bgColor, setBgColor] = useState('gray');
-
-
+    const isMounted = useRef(true);
 
     useEffect(() => {
         ImageColors.getColors(pokemon.picture, { fallback: 'gray' })
             .then(colors => {
+
+                if (!isMounted.current) { return; }
+
                 if (colors.platform === 'android') {
                     setBgColor(colors.dominant || 'gray');
                 } else if (colors.platform === 'ios') {
                     setBgColor(colors.background || 'gray');
                 }
+
             });
-    }, [pokemon]);
+
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
 
     return (
         <TouchableOpacity activeOpacity={0.9}>
