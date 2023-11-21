@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { RootStackParams } from '../navigation/StackNavigator';
 import { StackScreenProps } from '@react-navigation/stack';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { FadeInImage } from '../components';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { FadeInImage, PokemonDetails } from '../components';
+import { usePokemon } from '../hooks';
 
 interface PokemonScreenProps extends StackScreenProps<RootStackParams, 'PokemonScreen'> { }
 
@@ -14,8 +15,10 @@ export const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
     const { id, name, picture } = simplePokemon;
     const { top } = useSafeAreaInsets();
 
+    const { isLoading, pokemon } = usePokemon(id);
+
     return (
-        <View>
+        <View style={styles.mainContainer}>
             {/* Header */}
             <View style={{ ...styles.headerContainer, backgroundColor: color }}>
                 <TouchableOpacity
@@ -55,11 +58,25 @@ export const PokemonScreen = ({ navigation, route }: PokemonScreenProps) => {
                     uri={picture}
                     style={styles.pokemonImage} />
             </View>
+
+            {/* Detalles y Loading */}
+            {isLoading
+                ? <View style={styles.loaderContainer}>
+                    <ActivityIndicator
+                        color={color}
+                        size={50}
+                    />
+                </View>
+                : <PokemonDetails pokemon={pokemon} />
+            }
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+    },
     headerContainer: {
         height: 370,
         zIndex: 999,
@@ -87,5 +104,10 @@ const styles = StyleSheet.create({
         height: 250,
         position: 'absolute',
         bottom: -15,
+    },
+    loaderContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
