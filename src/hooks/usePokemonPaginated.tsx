@@ -27,9 +27,10 @@ export const usePokemonPaginated = () => {
             const picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 
             return { id, picture, name };
+
         });
 
-        setSimplePokemonList({ ...setSimplePokemonList, ...newPokemonList });
+        setSimplePokemonList([...simplePokemonList, ...newPokemonList]);
         setIsLoading(false);
 
     };
@@ -41,6 +42,8 @@ export const usePokemonPaginated = () => {
     return {
         isLoading,
         simplePokemonList,
+
+        loadPokemons,
     };
 
 };
