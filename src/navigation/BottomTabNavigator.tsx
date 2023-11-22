@@ -23,6 +23,7 @@ export const BottomTabNavigator = () => {
                     elevation: 0,
                     height: (Platform.OS === 'ios') ? 80 : 60,
                 },
+                headerShown: false,
             }}
         >
             <Tab.Screen
