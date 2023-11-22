@@ -57,6 +57,23 @@ export const PokemonDetails = ({ pokemon }: PokemonDetailsProps) => {
                 </View>
             </View>
 
+            {/* Stats */}
+            <View style={styles.regularContainer}>
+                <Text style={styles.title}>Stats</Text>
+                <View>
+                    {pokemon.stats.map((stat, i) => (
+                        <View key={stat.stat.name + i} style={styles.row}>
+                            <Text style={{ ...styles.regularText, width: 150 }}>{stat.stat.name}</Text>
+                            <Text style={{ ...styles.regularText, fontWeight: 'bold' }}>{stat.base_stat}</Text>
+                        </View>
+                    ))}
+                </View>
+
+                {/* Sprite final */}
+                <View style={styles.finalSpriteContainer}>
+                    <FadeInImage style={styles.basicSprite} uri={pokemon.sprites.front_default} />
+                </View>
+            </View>
         </ScrollView>
     );
 };
@@ -88,5 +105,9 @@ const styles = StyleSheet.create({
     basicSprite: {
         width: 100,
         height: 100,
+    },
+    finalSpriteContainer: {
+        marginBottom: 20,
+        alignItems: 'center',
     },
 });
