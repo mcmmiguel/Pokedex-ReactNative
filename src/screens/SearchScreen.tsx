@@ -18,9 +18,15 @@ export const SearchScreen = () => {
     useEffect(() => {
         if (term.length === 0) { return setPokemonsFiltered([]); }
 
-        if (term.length > 1) {
+        if (isNaN(Number(term))) {
             setPokemonsFiltered(simplePokemonList.filter((pokemons) => pokemons.name.toLowerCase().includes(term.toLowerCase())));
+        } else {
+            const pokemonById = simplePokemonList.find((pokemon) => pokemon.id === term);
+            setPokemonsFiltered(
+                pokemonById ? [pokemonById] : []
+            );
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [term]);
 
