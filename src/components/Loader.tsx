@@ -13,7 +13,6 @@ export const Loader = () => {
 const styles = StyleSheet.create({
     loaderContainer: {
         flex: 1,
-        backgroundColor: 'red',
         justifyContent: 'center',
         alignItems: 'center',
     },

@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     finalSpriteContainer: {
-        marginBottom: 20,
+        marginBottom: 50,
         alignItems: 'center',
     },
 });
