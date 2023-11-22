@@ -1,11 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { PokemonFull } from '../interfaces';
+import { PokemonDetailsProps } from '../interfaces';
 import { FadeInImage } from './FadeInImage';
-
-export interface PokemonDetailsProps {
-    pokemon: PokemonFull;
-}
 
 export const PokemonDetails = ({ pokemon }: PokemonDetailsProps) => {
     return (

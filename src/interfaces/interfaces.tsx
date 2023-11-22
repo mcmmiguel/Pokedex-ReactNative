@@ -1,5 +1,5 @@
 import { StyleProp, ImageStyle } from 'react-native';
-import { SimplePokemon } from './pokemonInterfaces';
+import { PokemonFull, SimplePokemon } from './pokemonInterfaces';
 
 export interface FadeInImageProps {
     uri: string;
@@ -8,4 +8,8 @@ export interface FadeInImageProps {
 
 export interface PokemonCardProps {
     pokemon: SimplePokemon
+}
+
+export interface PokemonDetailsProps {
+    pokemon: PokemonFull;
 }
