@@ -4,16 +4,18 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useDebouncedValue } from '../hooks';
 
 export interface SearchInputProps {
+    onDebounce: (value: string) => void;
     style?: StyleProp<ViewStyle>;
 }
 
-export const SearchInput = ({ style }: SearchInputProps) => {
+export const SearchInput = ({ style, onDebounce }: SearchInputProps) => {
 
     const [textValue, setTextValue] = useState('');
     const debouncedValue = useDebouncedValue(textValue, 1000);
 
     useEffect(() => {
-        console.log(debouncedValue);
+        onDebounce(debouncedValue);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedValue]);
 
     return (
