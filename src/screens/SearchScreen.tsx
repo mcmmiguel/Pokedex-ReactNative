@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, Platform, ActivityIndicator, Text, FlatList } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Dimensions, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { PokemonCard, SearchInput } from '../components';
+import { Loader, PokemonCard, SearchInput } from '../components';
 import { usePokemonSearch } from '../hooks';
 import { appTheme } from '../theme/appTheme';
+
+const screenWidth = Dimensions.get('window').width;
 
 export const SearchScreen = () => {
 
@@ -11,17 +13,19 @@ export const SearchScreen = () => {
     const { isFetching, simplePokemonList } = usePokemonSearch();
 
     if (isFetching) {
-        return (
-            <View style={styles.loaderContainer}>
-                <ActivityIndicator size={50} color="gray" />
-                <Text>Cargando...</Text>
-            </View>
-        );
+        return <Loader />;
     }
 
     return (
-        <View style={{ ...styles.mainContainer, marginTop: (Platform.OS === 'ios') ? top : top + 10 }}>
-            <SearchInput />
+        <View style={{ ...styles.mainContainer }}>
+            <SearchInput
+                style={{
+                    position: 'absolute',
+                    zIndex: 999,
+                    width: screenWidth - 40,
+                    top: (Platform.OS === 'ios') ? top : top + 15,
+                }}
+            />
             <FlatList
                 data={simplePokemonList}
                 keyExtractor={(pokemon) => pokemon.id}
@@ -34,7 +38,7 @@ export const SearchScreen = () => {
                     <Text style={{
                         ...appTheme.title,
                         ...appTheme.globalMargin,
-                        marginTop: top + 5,
+                        marginTop: (Platform.OS === 'ios') ? top + 60 : top + 60,
                         marginBottom: top + 5,
                     }}>
                         Pokedex
@@ -50,10 +54,5 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 20,
     },
-    loaderContainer: {
-        flex: 1,
-        backgroundColor: 'red',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
+
 });
